@@ -1,14 +1,16 @@
 # 🔧 Bosch EDC15 EEPROM Editor 
 
-![GitHub forks](https://img.shields.io/github/forks/muki01/OBD2_K-line_Reader?style=flat)
-![GitHub Repo stars](https://img.shields.io/github/stars/muki01/OBD2_K-line_Reader?style=flat)
-![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/muki01/OBD2_K-line_Reader?style=flat)
-![GitHub License](https://img.shields.io/github/license/muki01/OBD2_K-line_Reader?style=flat)
-![GitHub last commit](https://img.shields.io/github/last-commit/muki01/OBD2_K-line_Reader)
+![GitHub forks](https://img.shields.io/github/forks/muki01/Bosch_EDC15_EEPROM_Tool?style=flat)
+![GitHub Repo stars](https://img.shields.io/github/stars/muki01/Bosch_EDC15_EEPROM_Tool?style=flat)
+![GitHub Issues or Pull Requests](https://img.shields.io/github/issues/muki01/Bosch_EDC15_EEPROM_Tool?style=flat)
+![GitHub License](https://img.shields.io/github/license/muki01/Bosch_EDC15_EEPROM_Tool?style=flat)
+![GitHub last commit](https://img.shields.io/github/last-commit/muki01/Bosch_EDC15_EEPROM_Tool)
 ![C#](https://img.shields.io/badge/Language-C%23-blue) 
 ![Target](https://img.shields.io/badge/Target-Bosch_EDC15-red)
 
 A dedicated tool for modifying binary dumps from **Bosch EDC15** series Engine Control Units (ECUs), commonly found in Audi, VW, Seat, and Skoda vehicles.
+
+<img src="https://github.com/user-attachments/assets/3b6e1e5e-bb07-4129-a778-8a81fb4badf3" alt="EDC15 Editor Main Interface" width="50%"/>
 
 ## 🎯 Compatible Hardware
 This tool is specifically engineered for:
@@ -29,6 +31,37 @@ USE THIS SOFTWARE AT YOUR OWN RISK.
 - Login Code (PIN) Extraction: Automatically retrieve the 5-digit Login/PIN code required for key programming and VCDS adaptations.
 - Data Validation: Automatic file size check (512 bytes) to prevent accidental loading of Flash files or corrupted dumps.
 - Modern Interface: High-contrast dark mode UI for professional workshop environments.
+- 
+---
+
+## 📦 How to Download (Ready-to-Use)
+
+If you just want to use the application without dealing with the source code:
+
+1.  Navigate to the **[Releases](https://github.com/muki01/Bosch_EDC15_EEPROM_Tool/releases)** page.
+2.  Download the latest `.zip` file.
+3.  Extract the contents and run the `.exe` file.
+
+---
+
+## 🛠️ How to Build (For Developers)
+
+To open the project and compile it from source, follow these steps:
+
+1.  **Clone the Repository:**
+    ```bash
+    git clone https://github.com/muki01/Bosch_EDC15_EEPROM_Tool.git
+    ```
+2.  **Open the Project:**
+    * Launch **Visual Studio** (2019 or newer recommended).
+    * Go to `File > Open > Project/Solution` and select the `.sln` file in the folder.
+3.  **Build:**
+    * Go to the top menu: `Build > Build Solution` (or press `Ctrl + Shift + B`).
+4.  **Run:**
+    * Once the build is successful, press `F5` to run the application in Debug mode.
+    * You can find the compiled `.exe` in `\bin\Release` or `\bin\Debug`.
+
+---
 
 ## 🚀 How to Use
 - Load: Click "Open File" and select your 512-byte binary dump.
