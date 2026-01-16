@@ -300,7 +300,7 @@ namespace EDC15_EEPROM
 
         private void rjButton5_Click(object sender, EventArgs e)
         {
-            string url = "https://www.buymeacoffee.com/muki01";
+            string url = "https://www.paypal.com/donate/?hosted_button_id=SAAH5GHAH6T72";
 
             try
             {
