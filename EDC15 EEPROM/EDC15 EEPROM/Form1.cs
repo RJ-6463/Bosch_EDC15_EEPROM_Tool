@@ -16,7 +16,7 @@ namespace EDC15_EEPROM
     public partial class Form1 : Form
     {
         byte[] originalData;   // Original File
-        byte[] modifiedData;   // Modified Coppy
+        byte[] modifiedData;   // Modified Copy
         string openedFilePath;
 
         bool dragging = false;
@@ -27,44 +27,43 @@ namespace EDC15_EEPROM
         {
             GraphicsPath path = new GraphicsPath();
             path.StartFigure();
-            path.AddArc(0, 0, radius, radius, 180, 90); // Sol üst
-            path.AddArc(pnl.Width - radius, 0, radius, radius, 270, 90); // Sağ üst
-            path.AddArc(pnl.Width - radius, pnl.Height - radius, radius, radius, 0, 90); // Sağ alt
-            path.AddArc(0, pnl.Height - radius, radius, radius, 90, 90); // Sol alt
+            path.AddArc(0, 0, radius, radius, 180, 90);
+            path.AddArc(pnl.Width - radius, 0, radius, radius, 270, 90);
+            path.AddArc(pnl.Width - radius, pnl.Height - radius, radius, radius, 0, 90);
+            path.AddArc(0, pnl.Height - radius, radius, radius, 90, 90);
             path.CloseFigure();
             pnl.Region = new Region(path);
         }
 
-        // LOGIN CODE DEĞİŞTİRME (TextBox1)
+        // LOGIN CODE (TextBox1)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (modifiedData == null || textBox1.Text.Length < 1) return;
 
             if (ushort.TryParse(textBox1.Text, out ushort newPin))
             {
-                // Little Endian formatında kaydet (Örn: 07832 -> Hex -> Byte Swap)
+                // Save in Little Endian format (e.g., 07832 -> Hex -> Byte Swap)
                 byte b1 = (byte)(newPin & 0xFF);
                 byte b2 = (byte)((newPin >> 8) & 0xFF);
 
                 SetByte(0x012E, b1);
                 SetByte(0x012F, b2);
 
-                // Değiştiğini görsel olarak belirtmek istersen textbox rengini hafif değiştirebilirsin
                 textBox1.ForeColor = Color.Cyan;
             }
         }
 
-        // ODOMETER DEĞİŞTİRME (TextBox2)
+        // ODOMETER (TextBox2)
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             if (modifiedData == null) return;
 
-            // Sadece rakamları al (KM yazısını temizle)
+            // Just take the numbers (remove the KM text)
             string cleanValue = new string(textBox2.Text.Where(char.IsDigit).ToArray());
 
             if (uint.TryParse(cleanValue, out uint km))
             {
-                uint rawVal = km * 100; // Dosyadaki karşılığı (KM * 100)
+                uint rawVal = km * 100; // The equivalent in the file is (KM * 100)
 
                 SetByte(0x01BF, (byte)(rawVal & 0xFF));
                 SetByte(0x01C0, (byte)((rawVal >> 8) & 0xFF));
@@ -94,15 +93,15 @@ namespace EDC15_EEPROM
             if (val1 == 0x73 && val2 == 0x73)
             {
                 label15.Text = "IMMO ON";
-                rjToggleButton1.OnBackColor = Color.FromArgb(46, 204, 113); // Yeşil
-                rjToggleButton1.OnToggleColor = Color.FromArgb(224, 224, 224); // Yeşil
+                rjToggleButton1.OnBackColor = Color.FromArgb(46, 204, 113); // Green
+                rjToggleButton1.OnToggleColor = Color.FromArgb(224, 224, 224); // Green
                 if (rjToggleButton1.Checked != true) rjToggleButton1.Checked = true;
             }
             else if (val1 == 0x60 && val2 == 0x60)
             {
                 label15.Text = "IMMO OFF";
-                rjToggleButton1.OffBackColor = Color.FromArgb(231, 76, 60); // Kırmızı
-                rjToggleButton1.OffToggleColor = Color.FromArgb(224, 224, 224); // Kırmızı
+                rjToggleButton1.OffBackColor = Color.FromArgb(231, 76, 60); // Red
+                rjToggleButton1.OffToggleColor = Color.FromArgb(224, 224, 224); // Red
                 if (rjToggleButton1.Checked != false) rjToggleButton1.Checked = false;
             }
             rjToggleButton1.CheckedChanged += rjToggleButton1_CheckedChanged;
@@ -144,7 +143,7 @@ namespace EDC15_EEPROM
             ushort pinHex = (ushort)((b2 << 8) | b1); // Inverse (byte swap) 
             int pinDecimal = pinHex; // Decimal PIN
 
-            // 5 haneli format (başına sıfır ekler)
+            // 5-digit format (adds zeros at the beginning)
             textBox1.Text = pinDecimal.ToString("D5");
             label10.Text = pinDecimal.ToString("D5");
         }
@@ -190,12 +189,12 @@ namespace EDC15_EEPROM
             using (OpenFileDialog ofd = new OpenFileDialog())
             {
                 ofd.Filter = "Binary Files (*.bin)|*.bin|All Files (*.*)|*.*";
-                ofd.Title = "Select EDC15 EEPROM File";
+                ofd.Title = "Select the EDC15 EEPROM file.";
                 ofd.Multiselect = false;
 
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    // 1. Dosya Boyut Kontrolü (Güvenlik için)
+                    // 1. File Size Control (For Security Purposes)
                     FileInfo fileInfo = new FileInfo(ofd.FileName);
                     if (fileInfo.Length != 512)
                     {
@@ -211,7 +210,7 @@ namespace EDC15_EEPROM
                         openedFilePath = ofd.FileName;
                         originalData = File.ReadAllBytes(openedFilePath);
 
-                        modifiedData = (byte[])originalData.Clone(); // Make Clone
+                        modifiedData = (byte[])originalData.Clone(); // Create Clone
 
                         label3.Text = Path.GetFileName(openedFilePath); // Update File Name
                         label4.Text = openedFilePath;                   // Update File Path
@@ -233,7 +232,7 @@ namespace EDC15_EEPROM
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Dosya okunurken bir hata oluştu: " + ex.Message);
+                        MessageBox.Show("An error occurred while reading the file: " + ex.Message);
                     }
                 }
             }
@@ -253,7 +252,7 @@ namespace EDC15_EEPROM
         {
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.Filter = "Binary Files (*.bin)|*.bin";
-            sfd.Title = "Değiştirilmiş Dosyayı Kaydet";
+            sfd.Title = "Save the modified file.";
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
@@ -314,7 +313,7 @@ namespace EDC15_EEPROM
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Link açılamadı: " + ex.Message);
+                MessageBox.Show("The link could not be opened: " + ex.Message);
             }
         }
 
@@ -324,7 +323,6 @@ namespace EDC15_EEPROM
 
             try
             {
-                // Varsayılan tarayıcıda GitHub profilini açar
                 System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
                 {
                     FileName = githubUrl,
@@ -333,7 +331,7 @@ namespace EDC15_EEPROM
             }
             catch (Exception ex)
             {
-                MessageBox.Show("GitHub sayfası açılamadı: " + ex.Message);
+                MessageBox.Show("The GitHub page could not be opened: " + ex.Message);
             }
         }
     }
