@@ -39,8 +39,8 @@ USE THIS SOFTWARE AT YOUR OWN RISK.
 If you just want to use the application without dealing with the source code:
 
 1.  Navigate to the **[Releases](https://github.com/muki01/Bosch_EDC15_EEPROM_Tool/releases)** page.
-2.  Download the latest `.zip` file.
-3.  Extract the contents and run the `.exe` file.
+2.  Download the latest `.exe` file.
+3.  Run the `.exe` file.
 
 ---
 
